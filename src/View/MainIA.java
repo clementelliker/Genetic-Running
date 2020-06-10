@@ -1,15 +1,38 @@
 package View;
-
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
-import Controller.*;
+import Controller.MyKeyListener;
+import Controller.MyMouseListener;
 import Model.*;
 
-public class Main {
+public class MainIA {
 	
-	public static long maxFramerate = 144;
+public static long maxFramerate = 144;
 	
+	public static void main(String[] args) {
+		int[] map = new int[] {0,0,0,0,0,0,0,0,0,1,
+				   0,1,1,1,1,1,1,1,0,1,
+				   0,0,1,0,0,0,0,0,0,1,
+				   1,0,1,0,1,1,1,1,1,1,
+				   1,0,1,0,1,1,0,0,0,0,
+				   1,0,1,0,0,0,0,1,1,0,
+				   1,0,0,1,1,1,1,1,0,0,
+				   1,1,0,0,0,1,1,0,0,1,
+				   1,1,1,1,0,1,1,0,1,1,
+				   1,1,1,1,0,0,0,0,1,1};
+		Simulation sim = new Simulation(new Map(10,10, map), 1000);
+		Window wd = new Window(144, sim, 720, 720);
+		wd.game.linkWindow(wd);
+		sim.initBots(500, 325, 10, 0);
+		while(true) {
+			sim.runGen();
+		}
+		
+	}
+	
+	
+	/*
 	public static void main(String[] args) {
 		JFrame cadre = new JFrame("Genetic Running");
 		cadre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -23,7 +46,7 @@ public class Main {
 							   1,1,0,0,0,1,1,0,0,1,
 							   1,1,1,1,0,1,1,0,1,1,
 							   1,1,1,1,0,0,0,0,1,1};
-		Game game = new Game(new Map(10,10, map), new Player(500,325, 10, 0));
+		Game game = new Game(new Map(10,10, map), new Bot(500,325, 10, 0, new int[] {5,5,3}));
 		game.player.linkGame(game);
 		Window wd = new Window(144, game, 720, 720);
 		wd.game.linkWindow(wd);
@@ -40,21 +63,11 @@ public class Main {
 			wd.game.update();
 			wd.repaint();
 			wd.game.player.getWallDist();
+			wd.game.player.getInput();
 			while(!c.elapsedMaxTime()) {
 				
 			}
 		}
 	}
-	/* 
-	 * {0,0,0,0,0,0,0,0,0,1,
-				               0,1,1,1,1,1,1,1,0,1,
-				               0,0,1,0,0,0,0,0,0,1,
-				               1,0,1,0,1,1,1,1,1,1,
-				               1,0,1,0,1,1,0,0,0,0,
-				               1,0,1,0,0,0,0,1,1,0,
-				               1,0,0,1,1,1,1,1,0,0,
-				               1,1,0,0,0,1,1,0,0,1,
-				               1,1,1,1,0,1,1,0,1,1,
-				               1,1,1,1,0,0,0,0,1,1};
-	 */
+	*/
 }

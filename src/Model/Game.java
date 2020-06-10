@@ -16,6 +16,10 @@ public class Game {
 		this.keys = new boolean[1000];
 	}
 	
+	public Game() {
+		
+	}
+	
 	public void linkWindow(View.Window w) {
 		this.window = w;
 	}

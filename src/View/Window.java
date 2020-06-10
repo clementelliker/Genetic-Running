@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 
 import javax.swing.*;
 
@@ -30,6 +31,7 @@ public class Window extends JPanel{
 		super.paintComponent(g);
 		this.drawMap(g);
 		this.drawPlayer(g);
+		this.drawWallDists(g);
 		
 	}
 	
@@ -47,6 +49,13 @@ public class Window extends JPanel{
 	public void drawPlayer(Graphics2D g) {
 		g.setColor(new Color(255,0,0));
 		g.fill(new Ellipse2D.Double(this.game.player.xpos - this.game.player.hitBoxRay, this.game.player.ypos - this.game.player.hitBoxRay, this.game.player.hitBoxRay*2, this.game.player.hitBoxRay*2));
+	}
+	
+	public void drawWallDists(Graphics2D g) {
+		for(int i = 0; i < this.game.player.wallDists.length; i++) {
+			g.setColor(new Color(0,255,255));
+			g.draw(new Line2D.Double(this.game.player.xpos, this.game.player.ypos, this.game.player.wallDists[i][1], this.game.player.wallDists[i][2]));
+		}
 	}
 	
 	

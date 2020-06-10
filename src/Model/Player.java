@@ -12,12 +12,14 @@ public class Player {
 	public double angle;	
 	public double speed = 0.7;
 	public double sensibility = 0.02;
+	public double[][] wallDists;
 	
 	public Player(int x, int y, int hBR, int angle) {
 		this.xpos = x;
 		this.ypos = y;	
 		this.hitBoxRay = hBR;
 		this.angle = angle;
+		this.wallDists = new double[5][3];
 	}
 	
 	public void linkGame(Game g) {
@@ -48,47 +50,47 @@ public class Player {
 			return true; 
 		}else {
 			if(this.tilePos(currentTile) == "top left") {
-				System.out.println("top left");
+				//System.out.println("top left");
 				return this.hittingRightWall(currentTile) || this.hittingBottomWall(currentTile) || this.hittingBottomRightWall(currentTile)
 						|| this.xpos - this.hitBoxRay < 0 || this.ypos - this.hitBoxRay < 0;
 				
 			}else if(this.tilePos(currentTile) == "top right") {
-				System.out.println("top right");
+				//System.out.println("top right");
 				return this.hittingLeftWall(currentTile) || this.hittingBottomWall(currentTile) || this.hittingBottomLeftWall(currentTile)
 						|| this.xpos + this.hitBoxRay > this.game.window.wdWidth || this.ypos - this.hitBoxRay < 0;
 						
 			}else if(this.tilePos(currentTile) == "bottom left") {
-				System.out.println("bottom left");
+				//System.out.println("bottom left");
 				return this.hittingTopWall(currentTile) || this.hittingRightWall(currentTile) || this.hittingTopRightWall(currentTile)
 						|| this.xpos - this.hitBoxRay < 0 || this.ypos + this.hitBoxRay > this.game.window.wdHeight;
 						
 			}else if(this.tilePos(currentTile) == "bottom right") {
-				System.out.println("bottom right");
+				//System.out.println("bottom right");
 				return this.hittingTopWall(currentTile) || this.hittingLeftWall(currentTile) || this.hittingTopLeftWall(currentTile)
 						|| this.xpos + this.hitBoxRay > this.game.window.wdWidth || this.ypos + this.hitBoxRay > this.game.window.wdHeight;
 						
 			}else if(this.tilePos(currentTile) == "top") {
-				System.out.println("top");
+				//System.out.println("top");
 				return this.hittingLeftWall(currentTile) || this.hittingBottomLeftWall(currentTile) || this.hittingBottomWall(currentTile)
 						|| this.hittingBottomRightWall(currentTile) || this.hittingRightWall(currentTile) || this.ypos - this.hitBoxRay < 0;
 				
 			}else if(this.tilePos(currentTile) == "left") {
-				System.out.println("left");
+				//System.out.println("left");
 				return this.hittingTopWall(currentTile) || this.hittingTopRightWall(currentTile) || this.hittingRightWall(currentTile)
 						|| this.hittingBottomRightWall(currentTile) || this.hittingBottomWall(currentTile) || this.xpos - this.hitBoxRay < 0;
 				
 			}else if(this.tilePos(currentTile) == "bottom") {
-				System.out.println("bottom");
+				//System.out.println("bottom");
 				return this.hittingLeftWall(currentTile) || this.hittingTopLeftWall(currentTile) || this.hittingTopWall(currentTile)
 						|| this.hittingTopRightWall(currentTile) || this.hittingRightWall(currentTile) || this.ypos + this.hitBoxRay > this.game.window.wdHeight;
 				
 			}else if(this.tilePos(currentTile) == "right") {
-				System.out.println("right");
+				//System.out.println("right");
 				return this.hittingTopLeftWall(currentTile) || this.hittingLeftWall(currentTile) || this.hittingTopWall(currentTile)
 						|| this.hittingBottomLeftWall(currentTile) || this.hittingBottomWall(currentTile) || this.xpos + this.hitBoxRay > this.game.window.wdWidth;
 				
 			}else if(this.tilePos(currentTile) == "center"){
-				System.out.println("center");
+				//System.out.println("center");
 				return this.hittingBottomLeftWall(currentTile) || this.hittingBottomRightWall(currentTile) || this.hittingBottomWall(currentTile)
 						|| this.hittingLeftWall(currentTile) || this.hittingRightWall(currentTile) || this.hittingTopLeftWall(currentTile)
 						|| this.hittingTopRightWall(currentTile) || this.hittingTopWall(currentTile);
@@ -159,6 +161,36 @@ public class Player {
 		double maxTop = ((int)(bottomRightTile/this.game.map.mapHeight))*this.game.window.wdHeight/this.game.map.mapHeight;
 		double maxLeft = bottomRightTile%this.game.map.mapWidth*this.game.window.wdWidth/this.game.map.mapWidth;
 		return Maths.dist(this.xpos, this.ypos, maxLeft, maxTop) < this.hitBoxRay && this.game.map.tiles[bottomRightTile] == 1;
+	}
+	
+	public void getWallDist() {		
+		this.wallDists[0] = getWallDist(-Math.PI/2);
+		this.wallDists[1] = getWallDist(-Math.PI/4);
+		this.wallDists[2] = getWallDist(0);
+		this.wallDists[3] = getWallDist(Math.PI/4);
+		this.wallDists[4] = getWallDist(Math.PI/2);
+	}
+	
+	public double[] getWallDist(double theta) {
+		double ret = 0;
+		double x = this.xpos;
+		double y = this.ypos;
+		while(x > 0 && x < this.game.window.wdWidth && y > 0 
+				&& y < this.game.window.wdHeight && this.game.map.tiles[getTilesPos(x,y)] != 1) {
+			x += Math.cos(this.angle + theta)*this.speed;
+			y += Math.sin(this.angle + theta)*this.speed;
+			ret += this.speed;
+		}
+		return new double[] {ret-this.hitBoxRay, x, y};
+	}
+	
+	public int getTilesPos(double x, double y) {
+		return this.game.map.mapHeight*(int)(y*this.game.map.mapHeight/this.game.window.wdHeight) + (int)(x*this.game.map.mapWidth/this.game.window.wdWidth);
+	}
+
+	public void getInput() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
