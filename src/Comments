@@ -1,0 +1,3 @@
+Changing network size doesn't seem to impact performances that much.
+When trying the best IA of a gen it tends to take too risky turns and crashes on some maps.
+Achieving a perfect IA on all map would need more features and maybe another reinforcing method.

@@ -15,6 +15,10 @@ public class Neuron {
 			this.weights[j] = (seed.nextDouble()*2) - 1;
 		}
 	}
+
+	public Neuron(int length, boolean b) {
+		this.weights = new double[length];
+	}
 	
 	
 	

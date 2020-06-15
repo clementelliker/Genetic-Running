@@ -1,4 +1,6 @@
 package View;
+import java.util.ArrayList;
+
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
@@ -8,66 +10,178 @@ import Model.*;
 
 public class MainIA {
 	
-public static long maxFramerate = 144;
+	public static long maxFramerate = 144;
+	static int wdH = 720;
+	static int wdW = 720;
 	
 	public static void main(String[] args) {
-		int[] map = new int[] {0,0,0,0,0,0,0,0,0,1,
-				   0,1,1,1,1,1,1,1,0,1,
-				   0,0,1,0,0,0,0,0,0,1,
-				   1,0,1,0,1,1,1,1,1,1,
-				   1,0,1,0,1,1,0,0,0,0,
-				   1,0,1,0,0,0,0,1,1,0,
-				   1,0,0,1,1,1,1,1,0,0,
-				   1,1,0,0,0,1,1,0,0,1,
-				   1,1,1,1,0,1,1,0,1,1,
-				   1,1,1,1,0,0,0,0,1,1};
-		Simulation sim = new Simulation(new Map(10,10, map), 1000);
-		Window wd = new Window(144, sim, 720, 720);
+		int[] m = new int[] {0,0,0,1,0,0,0,1,1,1,
+		 	     0,1,0,0,0,1,0,1,1,1,
+	 	 	     0,1,1,1,1,1,0,0,0,1,
+			     0,0,1,0,0,0,1,1,0,0,
+	 		     1,0,1,0,1,0,0,0,1,0,
+	 	             1,0,1,0,1,1,1,0,0,0,
+	 		     1,0,1,0,0,1,1,1,1,1,
+			     1,0,1,1,0,0,0,0,1,1,
+		 	     1,0,0,0,1,1,1,0,1,1,
+		 	     1,1,1,0,0,0,0,0,1,1};
+
+	Map m1 = new Map(10, 10, m, 0, 10, 0); 
+
+	      m = new int[] {1,0,0,0,0,0,0,0,1,1,
+		 	     1,0,1,1,1,1,1,0,0,0,
+	 	 	     1,0,0,0,0,0,1,1,1,0,
+			     1,1,1,1,1,0,1,0,0,0,
+	 		     1,0,0,0,0,0,1,0,1,1,
+	 	             0,0,1,1,1,1,1,0,0,1,
+	 		     0,1,1,1,0,0,0,1,0,1,
+			     0,1,0,0,0,1,0,1,0,0,
+		 	     0,0,0,1,1,1,0,1,1,0,
+		 	     1,1,1,1,1,1,0,0,0,0};
+
+	Map m2 = new Map(10, 10, m, 99, 89, (int)Math.PI);
+
+	      m = new int[] {1,0,0,0,0,0,0,0,0,1,
+		 	       0,0,1,1,1,1,1,1,0,1,
+	 	   	       0,1,0,0,0,0,0,0,0,1,
+			       0,1,0,1,1,1,1,1,1,1,
+	 		       0,1,0,0,1,0,0,0,1,1,
+	 	               0,0,1,0,0,0,1,0,1,1,
+	 	  	       1,0,0,1,1,1,1,0,1,1,
+			       1,1,0,0,1,0,0,0,1,1,
+		 	       1,1,1,0,0,0,1,1,1,1,
+		 	       1,1,1,1,1,1,1,1,1,1};
+
+	Map m3 = new Map(10, 10, m, 4, 5, (int)(Math.PI));
+
+	      m = new int[] {1,1,1,1,1,1,0,0,0,1,
+		 	       1,1,1,1,1,0,0,1,0,1,
+	 	 	       1,1,1,1,1,0,1,1,0,0,
+			       1,0,0,0,1,0,1,1,1,0,
+	 		       0,0,1,0,0,0,1,0,0,0,
+	 	               0,1,1,1,1,1,1,0,1,1,
+	 		       0,1,1,0,0,0,1,0,0,1,
+			       0,1,0,0,1,0,1,1,0,1,
+		 	       0,0,0,1,1,0,0,0,0,1,
+		 	       1,1,1,1,1,1,1,1,1,1};
+
+	Map m4 = new Map(10, 10, m, 31, 41, 0);
+
+	      m = new int[] {0,0,0,0,1,0,0,0,1,1,
+		 	     0,1,1,0,0,0,1,0,1,1,
+	 	 	     0,0,0,1,1,1,1,0,0,1,
+			     1,1,0,1,1,1,1,1,0,1,
+	 		     0,0,0,1,1,1,1,0,0,1,
+	 	             0,1,1,1,1,1,0,0,1,1,
+	 		     0,0,0,1,1,0,0,1,1,1,
+			     1,1,0,0,1,0,1,1,1,1,
+		 	     1,1,1,0,0,0,1,1,1,1,
+		 	     1,1,1,1,1,1,1,1,1,1};
+
+	Map m5 = new Map(10, 10, m, 0, 10, 0);
+
+	      m = new int[] {1,0,0,0,0,0,1,1,1,1,
+		 	     1,0,1,1,1,0,0,1,1,1,
+	 	 	     1,0,0,0,1,1,0,0,1,1,
+			     1,1,1,0,0,0,1,0,0,1,
+	 		     1,1,1,1,1,0,1,1,0,1,
+	 	             1,1,1,1,0,0,1,1,0,0,
+	 		     0,0,0,0,0,1,1,1,1,0,
+			     0,1,1,1,1,1,1,1,1,0,
+		 	     0,0,1,1,0,0,0,1,0,0,
+		 	     1,0,0,0,0,1,0,0,0,1};
+
+	Map m6 = new Map(10, 10, m, 5, 15, (int)Math.PI);
+
+	      m = new int[] {0,0,0,0,1,0,0,0,1,1,
+		             0,1,1,0,0,0,1,0,1,1,
+	 	 	     0,1,1,1,1,1,1,0,0,1,
+			     0,1,0,0,0,1,1,1,0,1,
+	 		     0,1,0,1,0,0,0,0,0,1,
+	 	             0,1,0,1,1,1,1,1,1,1,
+	 		     0,1,0,0,0,0,1,1,1,1,
+			     0,1,1,1,1,0,0,0,1,1,
+		 	     0,1,0,0,0,1,1,0,1,1,
+		 	     0,0,0,1,0,0,0,0,1,1};
+
+	Map m7 = new Map(10, 10, m, 1, 0, 0);
+
+
+	      m = new int[] {1,1,0,0,0,1,1,1,1,1,
+		             1,1,0,1,0,1,1,1,1,1,
+	 	 	     1,1,0,1,0,0,1,1,1,1,
+			     0,0,0,1,1,0,0,1,1,1,
+	 		     0,1,1,1,1,1,0,0,0,0,
+	 	             0,0,1,1,1,1,1,1,1,0,
+	 		     1,0,1,1,1,1,1,1,0,0,
+			     1,0,0,1,1,1,1,0,0,1,
+		 	     1,1,0,0,1,0,0,0,1,1,
+		 	     1,1,1,0,0,0,1,1,1,1};
+
+	Map m8 = new Map(10, 10, m, 49, 59, (int)Math.PI);
+
+
+
+	      m = new int[] {0,0,0,0,1,1,0,0,0,1,
+		             0,1,1,0,1,0,0,1,0,0,
+	 	 	     0,0,1,0,0,0,1,1,1,0,
+			     1,0,1,1,1,1,1,0,0,0,
+	 		     1,0,1,1,0,0,0,0,1,1,
+	 	             0,0,1,1,0,1,1,1,1,1,
+	 		     0,1,1,1,0,1,1,0,0,0,
+			     0,0,0,1,0,0,0,0,1,0,
+		 	     1,1,0,0,1,1,1,1,0,0,
+		 	     1,1,1,0,0,0,0,0,0,1};
+
+	Map m9 = new Map(10, 10, m, 1, 0, 0);
+
+
+
+	      m = new int[] {1,1,1,0,0,0,0,0,0,1,
+		             1,1,0,0,1,1,1,1,0,0,
+	 	 	     1,0,0,1,1,1,1,1,1,0,
+			     0,0,1,0,0,0,0,0,1,0,
+	 		     0,1,1,0,1,1,1,0,1,0,
+	 	             0,0,1,0,0,1,1,0,1,0,
+	 		     1,0,1,1,0,0,1,0,1,0,
+			     1,0,0,1,1,0,1,0,1,0,
+		 	     1,1,0,0,1,0,1,0,0,0,
+		 	     1,1,1,0,0,0,1,1,1,1};
+
+	Map m10 = new Map(10, 10, m, 7, 8, (int)Math.PI);
+	
+	
+	ArrayList<Map> maps = new ArrayList<Map>();
+	maps.add(m1);
+	maps.add(m2);
+	maps.add(m3);
+	maps.add(m4);
+	maps.add(m5);
+	maps.add(m6);
+	maps.add(m7);
+	maps.add(m8);
+	maps.add(m9);
+	maps.add(m10);
+	
+		//GLOBAL VARIABLES
+	
+		int[] networkConsti = {5,5,3}; //each number is the amount of neurons of the layer, keep 5 for the 1st and 3 for the last, put anything between
+		int nbBots = 1000; //number of bots for each gen
+		int nbGen = 100; //number of gens
+		int nbSelectedBots = 100; //number of bots selected each gen
+	
+		Simulation sim = new Simulation(m1, nbBots);
+		Window wd = new Window(144, sim, wdW, wdH);
 		wd.game.linkWindow(wd);
-		sim.initBots(500, 325, 10, 0);
-		while(true) {
+		sim.linkWindow(wd);
+		sim.initBots((m1.startTile%10)*wdW/m1.mapWidth + wdW/(m1.mapWidth*2),(int)(m1.startTile/10)*wdH/m1.mapHeight + wdH/(m1.mapHeight*2), 10, m1.startAngle, networkConsti);
+		for(int i = 0; i < nbGen; i++) {
+			sim.map = maps.get(i%maps.size());
+			sim.updBotsPos();
+			System.out.println("Generation: " + i + "\n");
 			sim.runGen();
+			sim.mutateBots(nbSelectedBots);
 		}
 		
 	}
-	
-	
-	/*
-	public static void main(String[] args) {
-		JFrame cadre = new JFrame("Genetic Running");
-		cadre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		int[] map = new int[] {0,0,0,0,0,0,0,0,0,1,
-							   0,1,1,1,1,1,1,1,0,1,
-							   0,0,1,0,0,0,0,0,0,1,
-							   1,0,1,0,1,1,1,1,1,1,
-							   1,0,1,0,1,1,0,0,0,0,
-							   1,0,1,0,0,0,0,1,1,0,
-							   1,0,0,1,1,1,1,1,0,0,
-							   1,1,0,0,0,1,1,0,0,1,
-							   1,1,1,1,0,1,1,0,1,1,
-							   1,1,1,1,0,0,0,0,1,1};
-		Game game = new Game(new Map(10,10, map), new Bot(500,325, 10, 0, new int[] {5,5,3}));
-		game.player.linkGame(game);
-		Window wd = new Window(144, game, 720, 720);
-		wd.game.linkWindow(wd);
-		JTextField component = new JTextField();
-	    wd.addMouseListener(new MyMouseListener());
-	    component.addKeyListener(new MyKeyListener(wd));
-	    cadre.add(component);
-		cadre.add(wd);
-		cadre.setSize(wd.wdWidth+16,wd.wdHeight+39);
-		cadre.setVisible(true);
-		double maxFramerateCapping = 1000/maxFramerate;
-		while(wd.game.checkLoose() == false) {
-			Chrono c = new Chrono(maxFramerateCapping);
-			wd.game.update();
-			wd.repaint();
-			wd.game.player.getWallDist();
-			wd.game.player.getInput();
-			while(!c.elapsedMaxTime()) {
-				
-			}
-		}
-	}
-	*/
 }

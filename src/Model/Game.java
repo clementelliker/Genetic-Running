@@ -20,6 +20,15 @@ public class Game {
 		
 	}
 	
+	public Game(Map m) {
+		this.map = m;
+		this.keys = new boolean[1000];
+	}
+	
+	public void addP(Player p) {
+		this.player = p;
+	}
+
 	public void linkWindow(View.Window w) {
 		this.window = w;
 	}
@@ -45,5 +54,9 @@ public class Game {
 
 	public boolean checkLoose() {
 		return this.player.hittingWall();
+	}
+	
+	public boolean checkWin() {
+		return this.player.lapDone();
 	}
 }

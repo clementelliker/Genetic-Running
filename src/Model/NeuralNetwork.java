@@ -21,11 +21,21 @@ public class NeuralNetwork {
 		this.neurons = neurons;
 	}
 	
+	public NeuralNetwork() {
+		ArrayList<ArrayList<Neuron>> neurons = new ArrayList<ArrayList<Neuron>>();
+		this.neurons = neurons;
+	}
+
 	public void displayNetwork() {
-		for(int i = 0; i < this.neurons.size(); i++) {
+		for(int i = 0; i < this.neurons.size()-1; i++) {
 			for(int j = 0; j < this.neurons.get(i).size(); j++) {
+				System.out.print("b.network.neurons.get("+i+").get("+j+").weights = new double[] {");
 				for(int k = 0; k < this.neurons.get(i).get(j).weights.length; k++) {
-					System.out.print(this.neurons.get(i).get(j).weights[k] + "   ");
+					if(k != this.neurons.get(i).get(j).weights.length-1) {
+						System.out.print(this.neurons.get(i).get(j).weights[k] + ",");
+					}else {
+						System.out.print(this.neurons.get(i).get(j).weights[k] + "};");
+					}
 				}
 				System.out.println();
 			}
@@ -84,5 +94,24 @@ public class NeuralNetwork {
 	
 	public static double sigmoidF(double b) {
 		return 1/(1 + Math.pow(Math.E, -b));
+	}
+	
+	public NeuralNetwork copy() {
+		NeuralNetwork ret = new NeuralNetwork();
+		for(int i = 0; i < this.neurons.size()-1; i++) {
+			ret.neurons.add(new ArrayList<Neuron>());
+			for(int j = 0; j < this.neurons.get(i).size(); j++) {
+				ret.neurons.get(i).add(new Neuron(this.neurons.get(i).get(0).weights.length, true));
+				for(int k = 0; k < this.neurons.get(i).get(j).weights.length; k++) {
+					ret.neurons.get(i).get(j).weights[k] = this.neurons.get(i).get(j).weights[k];
+				}
+			}
+		}
+		ret.neurons.add(new ArrayList<Neuron>());
+		for(int i = 0; i < this.neurons.get(this.neurons.size()-1).size(); i++) {
+			ret.neurons.get(this.neurons.size()-1).add(new Neuron(0));
+		}
+			
+		return ret;
 	}
 }

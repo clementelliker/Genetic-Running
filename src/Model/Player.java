@@ -192,6 +192,10 @@ public class Player {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public boolean lapDone() {
+		return this.playerTilesPos() == this.game.map.finishTile;
+	}
 	
 	
 }
