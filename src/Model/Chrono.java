@@ -20,6 +20,14 @@ public class Chrono {
 		this.time = System.currentTimeMillis();
 	}
 	
+	public Chrono() {
+		this.time = System.currentTimeMillis();
+	}
+	
+	public double stop() {
+		return System.currentTimeMillis() - this.time;
+	}
+	
 	public boolean elapsedMaxTime() {
 		return System.currentTimeMillis() - this.time >= this.maxElapsingtime;
 	}

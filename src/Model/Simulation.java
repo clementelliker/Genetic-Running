@@ -23,18 +23,27 @@ public class Simulation extends Game{
 		}
 	}
 	
-	public void runGen() {
+	public void runGen(ArrayList<Map> maps) {
 		for(int i = 0; i < nbBots; i++) {
 			this.bots.get(i).survivalTime = 0;
-			while(this.bots.get(i).hittingWall() == false && this.bots.get(i).lapDone() == false) {
-				this.bots.get(i).getWallDist();
-				this.bots.get(i).getInput();
-				this.bots.get(i).udpatePlayer();
-				this.bots.get(i).survivalTime++;
-			}
-			this.bots.get(i).lapFinished = this.bots.get(i).lapDone();
-			for(int j = 0; j < 0; j++) {
-				System.out.println();
+			this.bots.get(i).nbLapFinished = 0;
+		}
+		for(int j = 0; j < maps.size(); j++) {
+			this.map = maps.get(j);
+			this.updBotsPos();
+			for(int i = 0; i < nbBots; i++) {
+				while(this.bots.get(i).hittingWall() == false && this.bots.get(i).lapDone() == false) {
+					this.bots.get(i).getWallDist();
+					this.bots.get(i).getInput();
+					this.bots.get(i).udpatePlayer();
+					this.bots.get(i).survivalTime++;
+				}
+				if(this.bots.get(i).lapDone()) {
+					this.bots.get(i).nbLapFinished++;
+				}
+				for(int k = 0; k < 0; k++) {
+					System.out.println();
+				}
 			}
 		}
 	}
@@ -80,9 +89,8 @@ public class Simulation extends Game{
 			int j = 0;
 			boolean added = false;
 			while(j < ret.size() && added == false) {
-				if((this.bots.get(i).lapFinished == true && ret.get(j).lapFinished == false) ||
-						(this.bots.get(i).lapFinished == true && ret.get(j).lapFinished == true	&& this.bots.get(i).survivalTime < ret.get(j).survivalTime) ||
-						(this.bots.get(i).lapFinished == false && ret.get(j).lapFinished == false && this.bots.get(i).survivalTime > ret.get(j).survivalTime)) {
+				if((this.bots.get(i).nbLapFinished > ret.get(j).nbLapFinished) ||
+						(this.bots.get(i).nbLapFinished == ret.get(j).nbLapFinished && this.bots.get(i).survivalTime < ret.get(j).survivalTime)) {
 					added = true;
 					if(ret.size() < nbRetBots) {
 						ret.add(ret.get(ret.size() - 1));
@@ -107,8 +115,8 @@ public class Simulation extends Game{
 	}
 	
 	public static void showArray(ArrayList<Bot> bestBots) {
-		for(int i = 0; i < bestBots.size(); i++){
-			System.out.println("pos: " + i + " time: " + bestBots.get(i).survivalTime + " lap: " + bestBots.get(i).lapFinished);
+		for(int i = bestBots.size()-1; i >= 0; i--){
+			System.out.println("pos: " + i + " time: " + bestBots.get(i).survivalTime + " lap: " + bestBots.get(i).nbLapFinished);
 		}
 		System.out.println();
 	}

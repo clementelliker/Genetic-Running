@@ -4,7 +4,7 @@ public class Bot extends Player{
 	
 	public NeuralNetwork network;
 	public int survivalTime;
-	public boolean lapFinished;
+	public int nbLapFinished;
 	
 	public Bot(int x, int y, int hBR, int angle, int[] networkConsti) {
 		super(x,y,hBR,angle);
@@ -16,7 +16,7 @@ public class Bot extends Player{
 		super(x,y,hBR,angle);
 		this.survivalTime = 0;
 		this.network = b.network.copy();
-		this.lapFinished = false;
+		this.nbLapFinished = 0;
 	}
 	
 	public void getInput() {

@@ -176,10 +176,8 @@ public class MainIA {
 		sim.linkWindow(wd);
 		sim.initBots((m1.startTile%10)*wdW/m1.mapWidth + wdW/(m1.mapWidth*2),(int)(m1.startTile/10)*wdH/m1.mapHeight + wdH/(m1.mapHeight*2), 10, m1.startAngle, networkConsti);
 		for(int i = 0; i < nbGen; i++) {
-			sim.map = maps.get(i%maps.size());
-			sim.updBotsPos();
 			System.out.println("Generation: " + i + "\n");
-			sim.runGen();
+			sim.runGen(maps);
 			sim.mutateBots(nbSelectedBots);
 		}
 		

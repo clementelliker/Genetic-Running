@@ -177,9 +177,9 @@ public class Player {
 		double y = this.ypos;
 		while(x > 0 && x < this.game.window.wdWidth && y > 0 
 				&& y < this.game.window.wdHeight && this.game.map.tiles[getTilesPos(x,y)] != 1) {
-			x += Math.cos(this.angle + theta)*this.speed;
-			y += Math.sin(this.angle + theta)*this.speed;
-			ret += this.speed;
+			x += Math.cos(this.angle + theta)*this.speed*10;
+			y += Math.sin(this.angle + theta)*this.speed*10;
+			ret += this.speed*10;
 		}
 		return new double[] {ret-this.hitBoxRay, x, y};
 	}
